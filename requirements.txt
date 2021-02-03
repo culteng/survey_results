@@ -1,0 +1,6 @@
+dash==1.0.0
+gunicorn==19.9.0
+pandas==0.23.4
+seaborn==0.11.0
+pywaffle==0.6.1
+plot-likert
