@@ -2,6 +2,7 @@
 # subprocess.check_call([sys.executable, "-m", "pip", "install", 'seaborn'])
 # python imports 
 import os
+import sys
 import glob
 import pandas as pd
 import numpy as np
@@ -119,7 +120,7 @@ def chart_donut(df, col, color_lol):
         print(row["percs"], index)
         scenario = row[col]
         percentage = int(round(row["percs"] * 100, 0))
-        textLabel = scenario + ': ' + str(percentage) + '%'
+        textLabel =  '{}: {} %'.format(str(scenario), str(percentage))
         donut_sizes = [100 - percentage, percentage] # 
         axs[index].text(0.01, .8, textLabel, horizontalalignment='center', verticalalignment='center')
         axs[index].pie(donut_sizes, radius=.7, startangle=90, colors=color_lol[index],
@@ -171,16 +172,22 @@ def main(args):
     ax = chart_likert(df_counts)
     plt.savefig('./output/plt_likert.png', bbox_inches='tight')
     
-    # heatplot
-    plt.clf()
-    ax = chart_kde(df)
-    ax.set_xticklabels(['male','female'])
-    plt.savefig('./output/plt_violin.png', bbox_inches='tight')
+    # # heatplot
+    # plt.clf()
+    # ax = chart_kde(df)
+    # ax.set_xticklabels(['male','female'])
+    # plt.savefig('./output/plt_violin.png', bbox_inches='tight')
     
     # gender donut plots
     plt.clf()
     ax = chart_donut(df, 'gender', [['#d5f6da', '#5cdb6f'], ['#BED6DD', '#11ADDB']])
     plt.savefig('./output/plt_donut_genders.jpg', bbox_inches='tight')
+    
+    # waffle
+    plt.clf()
+    ax = chart_waffle(df.ethnicity, ['Black', 'Asian', 'White', 'Hispanic'])
+    plt.savefig('./output/waffle.png', bbox_inches='tight')
+
 
 
 if __name__ == '__main__':
